@@ -1,13 +1,13 @@
 package com.onlinevoting.service;
 
-import com.onlinevoting.constants.EmailConstants;
-import com.onlinevoting.model.UserDetail;
-import com.onlinevoting.repository.UserDetailRepository;
-
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.onlinevoting.constants.EmailConstants;
+import com.onlinevoting.model.UserDetail;
+import com.onlinevoting.repository.UserDetailRepository;
 
 @Service
 public class UserDetailService {

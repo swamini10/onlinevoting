@@ -1,8 +1,10 @@
 package com.onlinevoting.model;
-import jakarta.persistence.*;
-import lombok.Getter;
-
 import java.time.LocalDateTime;
+
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import lombok.Getter;
 
 @MappedSuperclass
 @Getter

@@ -1,7 +1,15 @@
 package com.onlinevoting.model;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import java.sql.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class UserDetail extends AuditDetail {
@@ -34,7 +42,9 @@ public class UserDetail extends AuditDetail {
     @NotNull(message = "Aadhar number is required")
     @Digits(integer = 12, fraction = 0, message = "Aadhar number must be 12 digits")
     private Long  aadharNumber;
-
+   
+    public UserDetail() {
+    }
 
     public UserDetail(String firstName, String lastName, String middleName, String emailId, String phoneNo, String address,
                       Date dob, Long aadharNumber) {
@@ -98,5 +108,7 @@ public class UserDetail extends AuditDetail {
         return aadharNumber;
     }
 
-    
+    public String fullName() {
+     return String.join(" ", firstName, lastName);
+    }
 }
