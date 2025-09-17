@@ -1,15 +1,7 @@
 package com.onlinevoting.model;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.sql.Date;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 
 @Entity
 public class UserDetail extends AuditDetail {
@@ -42,12 +34,16 @@ public class UserDetail extends AuditDetail {
     @NotNull(message = "Aadhar number is required")
     @Digits(integer = 12, fraction = 0, message = "Aadhar number must be 12 digits")
     private Long  aadharNumber;
-   
+
+    @Lob
+    @Column(name = "photo", columnDefinition = "LONGBLOB")
+    private byte[] photo;
+    
     public UserDetail() {
     }
 
     public UserDetail(String firstName, String lastName, String middleName, String emailId, String phoneNo, String address,
-                      Date dob, Long aadharNumber) {
+                      Date dob, Long aadharNumber, byte[] photo) {
         super();
         if (firstName == null || firstName.isBlank()) throw new IllegalArgumentException("First name is required");
         if (lastName == null || lastName.isBlank()) throw new IllegalArgumentException("Last name is required");
@@ -66,7 +62,42 @@ public class UserDetail extends AuditDetail {
         this.address = address;
         this.dob = dob;
         this.aadharNumber = aadharNumber;
+        this.photo = photo;
     }
+    
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public void setAadharNumber(Long aadharNumber) {
+        this.aadharNumber = aadharNumber;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }   
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }   
 
     public void setId(Long id) {
         this.id = id;
@@ -110,5 +141,9 @@ public class UserDetail extends AuditDetail {
 
     public String fullName() {
      return String.join(" ", firstName, lastName);
+    }
+
+    public byte[] getPhoto() {
+        return photo;
     }
 }

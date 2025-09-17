@@ -1,4 +1,3 @@
-
 CREATE TABLE `online_voting`.`user_details` (
   `id` INT NOT NULL,
   `first_name` VARCHAR(45) NULL,
