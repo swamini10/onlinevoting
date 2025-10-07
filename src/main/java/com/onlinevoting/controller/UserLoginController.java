@@ -24,12 +24,12 @@ public class UserLoginController {
     @PostMapping("/v1/user/generate_otp")
     public ResponseEntity<ApiResponse> genrateOtp(@RequestBody @Valid UserLoginInfo userLoginInfo) {
         loginService.generateOtp(userLoginInfo);
-        return ResponseEntity.ok(new ApiResponse<>(true, "OTP Generate Successfully"));
+        return ResponseEntity.ok(new ApiResponse<>(true, "OTP Generate Successfully",null));
     }
 
     @PostMapping("/v1/user/validate_otp") 
     public ResponseEntity<ApiResponse> loginUser(@RequestBody @Valid UserLoginDTO userLoginInfDto) {
         Boolean isLoginSuccess = loginService.loginUser(userLoginInfDto);
-        return ResponseEntity.ok(new ApiResponse<>(isLoginSuccess, "Login Successfully"));
+        return ResponseEntity.ok(new ApiResponse<>(isLoginSuccess, "Login Successfully",null));
     }
 }

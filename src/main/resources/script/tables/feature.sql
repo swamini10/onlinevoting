@@ -1,0 +1,9 @@
+CREATE TABLE `feature` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `description` VARCHAR(255) DEFAULT NULL,
+  `url` VARCHAR(255) DEFAULT NULL,
+   `icon` VARCHAR(255) DEFAULT NULL,
+  `is_active` BIT(1) DEFAULT 1,
+  PRIMARY KEY (`id`)
+);

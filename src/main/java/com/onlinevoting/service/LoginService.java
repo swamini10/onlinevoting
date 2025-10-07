@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import com.onlinevoting.constants.Constants;
 import com.onlinevoting.constants.EmailConstants;
 import com.onlinevoting.dto.UserLoginDTO;
 import com.onlinevoting.dto.UserLoginInfo;
@@ -50,17 +51,20 @@ public class LoginService {
      * if user is found, generate OTP and send it to the user's email address.
      */
     public void generateOtp(UserLoginInfo userLoginInfo) {
-    logger.info("LoginService initialized");
-     UserDetail userDetail = userDetailRepository.findByEmailId(userLoginInfo.getUserId());
+
+       logger.info("LoginService initialized");
+        UserDetail userDetail = userDetailRepository.findByEmailId(userLoginInfo.getUserId());
         if (userDetail == null) {
-            throw new UserNotFoundException("User not found with email: " + userLoginInfo.getUserId());
+            throw new UserNotFoundException(Constants.USER_NOT_FOUND + userLoginInfo.getUserId());
+        } else if (!userDetail.getIsActive()) {
+            throw new IllegalArgumentException(Constants.USER_NOT_ACTIVE_MESSAGE);
         }
 
         Optional<UserOtpDetails>  existingUserOtpDetails =  
                                               userOtpDetailsRepository.findByUserDetailIdAndIsOtpUsedFalseAndIsActiveTrue(userDetail.getId());
          
         if ( existingUserOtpDetails.isPresent() && !isOtpExpired(existingUserOtpDetails.get().getExpiryTime())) {
-            throw new IllegalArgumentException("Otp already sent please check your email to login.");
+            throw new IllegalArgumentException(Constants.OTP_ALREADY_SENT);
          } else {
 
             // Generate a 5-digit OTP`
