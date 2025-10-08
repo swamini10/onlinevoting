@@ -8,6 +8,9 @@ import jakarta.validation.Valid;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onlinevoting.dto.ApiResponse;
+import com.onlinevoting.dto.StatusUpdateRequestDTO;
+import com.onlinevoting.dto.UserDetailDTO;
+import com.onlinevoting.enums.Status;
 
 import java.util.List;
 
@@ -15,9 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,9 +45,9 @@ public class UserDetailsController {
     }
 
     // Get API by email id
-    @GetMapping(path = "/v1/user_detail", produces = { "application/json" })
-    public ResponseEntity<ApiResponse<UserDetail>> getUserByEmail(HttpServletRequest request) {
-        UserDetail userDetail = userDetailService.getUserByEmail(request.getHeader("email"));
+    @GetMapping(path = "/v1/user_detail/{id}", produces = { "application/json" })
+    public ResponseEntity<ApiResponse<UserDetail>> getUserById(@PathVariable Long id) {
+        UserDetail userDetail = userDetailService.getUserById(id);
         ApiResponse<UserDetail> response = new ApiResponse<>(true, userDetail, null);
         return ResponseEntity.ok(response);
     }
@@ -68,10 +73,21 @@ public class UserDetailsController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(path = "/v1/user_detail/findbyStatus", produces = { "application/json" })
-    public ResponseEntity<ApiResponse<List<UserDetail>>> getAllPendingApprovalUsers(@RequestParam("status") String status) {
-        List<UserDetail> userDetails = userDetailService.getAllPendingApprovalUsers();
-        ApiResponse<List<UserDetail>> response = new ApiResponse<>(true, userDetails, null);
+    
+
+    @GetMapping(path = "/v1/user_detail/findbyStatus", produces = { "application/json"})
+    public ResponseEntity<ApiResponse<List<UserDetailDTO>>> getAllPendingApprovalUsers(
+        @RequestParam String status, @RequestParam String orderBy, @RequestParam String order) {
+        List<UserDetailDTO> userDetails = userDetailService.getAllPendingApprovalUsers(status, orderBy, order);
+        ApiResponse<List<UserDetailDTO>> response = new ApiResponse<>(true, userDetails, null);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping(path = "/v1/user_detail/approve/{id}")
+    public ResponseEntity<ApiResponse<String>> approveUser(@PathVariable Long id, @RequestBody StatusUpdateRequestDTO statusUpdateRequest ) {
+        userDetailService.approveUser(id, statusUpdateRequest.getStatus());
+        ApiResponse<String> response = new ApiResponse<>(true, "User " + statusUpdateRequest.getStatus().toLowerCase() + " successfully", null);
+        return ResponseEntity.ok(response);
+    }
+    
 }

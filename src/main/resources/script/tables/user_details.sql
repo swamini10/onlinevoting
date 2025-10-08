@@ -14,5 +14,6 @@ CREATE TABLE `user_detail` (
   `middle_name` varchar(255) DEFAULT NULL,
   `phone_no` varchar(255) DEFAULT NULL,
   `photo` longblob,
+  `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );

@@ -1,1 +1,1 @@
-INSERT INTO country(name) values ("INDIA"), ("UAE"), ("Singapur");
+INSERT INTO country(id,name) values (1,"INDIA"), (2,"UAE"), (3,"Singapur");

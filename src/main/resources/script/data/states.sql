@@ -1,10 +1,28 @@
 
-INSERT INTO states(name,country_id) values ("Maharashtra",1), ("Karnataka",1), ("Goa",1), 
-("Andhra Pradesh",1), ("Assam",1), ("Arunachal Pradesh",1), 
-("Odisha",1), ("Punjab",1), ("Rajasthan",1), ("Sikkim",1), 
-("Tamil Nadu",1), ("Telangana",1), ("Tripura",1), 
-("Uttar Pradesh",1), ("Uttarakhand",1), 
-("Bihar",1), ("Gujarat",1), ("Chhattisgarh",1) ("Haryana",1), 
-("Himachal Pradesh",1), ("Jharkhand",1),("Kerala",1) 
-("Madhya Pradesh",1), ("Manipur",1), ("Meghalaya",1),("West Bengal",1) ;
-
+INSERT INTO states(id, name, country_id) values 
+(1, "Maharashtra", 1), 
+(2, "Karnataka", 1), 
+(3, "Goa", 1), 
+(4, "Andhra Pradesh", 1), 
+(5, "Assam", 1), 
+(6, "Arunachal Pradesh", 1), 
+(7, "Odisha", 1), 
+(8, "Punjab", 1), 
+(9, "Rajasthan", 1), 
+(10, "Sikkim", 1), 
+(11, "Tamil Nadu", 1), 
+(12, "Telangana", 1), 
+(13, "Tripura", 1), 
+(14, "Uttar Pradesh", 1), 
+(15, "Uttarakhand", 1), 
+(16, "Bihar", 1), 
+(17, "Gujarat", 1), 
+(18, "Chhattisgarh", 1), 
+(19, "Haryana", 1), 
+(20, "Himachal Pradesh", 1), 
+(21, "Jharkhand", 1), 
+(22, "Kerala", 1), 
+(23, "Madhya Pradesh", 1), 
+(24, "Manipur", 1), 
+(25, "Meghalaya", 1), 
+(26, "West Bengal", 1);

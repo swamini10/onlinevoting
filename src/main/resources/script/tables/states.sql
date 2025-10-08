@@ -1,6 +1,5 @@
-
 CREATE TABLE states (
-  id bigint NOT NULL AUTO_INCREMENT,
+  id bigint NOT NULL ,
   name VARCHAR(50) UNIQUE NOT NULL,  
   country_id bigint NOT NULL,
   is_active bit(1) DEFAULT 1  ,
@@ -8,3 +7,4 @@ CREATE TABLE states (
    PRIMARY KEY (`id`),
  CONSTRAINT `country_key` FOREIGN KEY (`country_id`) REFERENCES `country` (`id`)
 );
+

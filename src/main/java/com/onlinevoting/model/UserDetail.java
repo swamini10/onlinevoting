@@ -43,6 +43,8 @@ public class UserDetail extends AuditDetail {
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
     
+    private String status;
+
     public UserDetail() {
     }
 
@@ -69,7 +71,10 @@ public class UserDetail extends AuditDetail {
         this.photo = photo;
     }
 
-    
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
     
     public void setEmailId(String emailId) {
         this.emailId = emailId;
@@ -151,5 +156,9 @@ public class UserDetail extends AuditDetail {
 
     public byte[] getPhoto() {
         return photo;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

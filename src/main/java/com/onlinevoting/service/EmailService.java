@@ -1,7 +1,6 @@
 
 package com.onlinevoting.service;
 
-import com.onlinevoting.util.EmailUtil;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -25,9 +24,6 @@ public class EmailService {
     private JavaMailSender mailSender;
 
 	@Autowired
-	private EmailUtil emailUtil;
-
-	@Autowired
     private Configuration freemarkerConfig;
 
 	  public void sendEmailWithTemplate(String to, String subject, String templateName, Map<String, Object> model)
@@ -45,6 +41,8 @@ public class EmailService {
 
         mailSender.send(message);
     }
+
+    
 }
 
 
