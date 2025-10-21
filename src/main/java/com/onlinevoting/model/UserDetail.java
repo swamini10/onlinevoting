@@ -11,21 +11,27 @@ public class UserDetail extends AuditDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @NotBlank(message = "First name is required")
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
     @NotBlank(message = "Last name is required")
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
+    @Column(name = "middle_name", length = 50)
     private String middleName;
 
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email is required")
+    @Column(name = "email_id", nullable = false, unique = true, length = 100)
     private String emailId;
 
     @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
+    @Column(name = "phone_no", length = 10)
     private String phoneNo;
 
     @OneToOne
@@ -33,16 +39,19 @@ public class UserDetail extends AuditDetail {
     private Address address;
 
     @NotNull(message = "Date of birth is required")
+    @Column(name = "dob", nullable = false)
     private Date dob;
 
     @NotNull(message = "Aadhar number is required")
     @Digits(integer = 12, fraction = 0, message = "Aadhar number must be 12 digits")
+    @Column(name = "aadhar_number", nullable = false, unique = true)
     private Long  aadharNumber;
 
     @Lob
     @Column(name = "photo", columnDefinition = "LONGBLOB")
     private byte[] photo;
     
+    @Column(name = "status", length = 20)
     private String status;
 
     public UserDetail() {

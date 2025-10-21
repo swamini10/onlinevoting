@@ -22,10 +22,10 @@ public class Feature {
     @Column(name = "description", length = 255)
     private String description;
     
-    @Column(name = "menuId")
+    @Column(name = "menu_id", nullable = false)
     private Long menuId;
     
-    @Column(name = "menuName", length = 100)
+    @Column(name = "menu_name", nullable = false, length = 100)
     private String menuName;
     
     @Column(name = "url", length = 255)
