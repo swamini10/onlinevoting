@@ -6,6 +6,6 @@ CREATE TABLE `role_feature_mapping` (
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`),
   KEY `feature_id` (`feature_id`),
-  CONSTRAINT `role_feature_mapping_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
-  CONSTRAINT `role_feature_mapping_ibfk_2` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`)
+  CONSTRAINT `role_feature_mapping_ibfk_11` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `role_feature_mapping_ibfk_21` FOREIGN KEY (`feature_id`) REFERENCES `feature` (`id`)
 );
