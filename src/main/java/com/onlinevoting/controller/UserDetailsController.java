@@ -35,9 +35,9 @@ public class UserDetailsController {
 
     @PostMapping(path = "/v1/user_detail", consumes = { "multipart/form-data" })
     public ResponseEntity<ApiResponse<UserDetail>> createUser(
-            @RequestPart("user") @Valid String userDetail,
+            @RequestPart("user") @Valid String userDetailStr,
             @RequestPart("photo") byte[] profilePhoto) throws Exception {
-        UserDetail detail = new ObjectMapper().readValue(userDetail, UserDetail.class);
+        UserDetail detail = new ObjectMapper().readValue(userDetailStr, UserDetail.class);
         detail.setPhoto(profilePhoto);
         UserDetail savedUser = userDetailService.saveUser(detail);
         ApiResponse<UserDetail> response = new ApiResponse<>(true, savedUser, null);
