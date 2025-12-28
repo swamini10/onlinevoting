@@ -25,4 +25,9 @@ public class CityService {
                 .map(city -> new BaseDTO(city.getId(),city.getName()))
                 .toList();
     }
+
+    public City getById(Long id) {
+        return cityRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("City not found with id: " + id));
+    }
 }

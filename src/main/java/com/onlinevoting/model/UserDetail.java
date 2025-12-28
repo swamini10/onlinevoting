@@ -91,7 +91,10 @@ public class UserDetail extends AuditDetail {
         this.role = role;
     }
 
-
+    public String getFullName() {
+        return String.join(" ", firstName, middleName != null ? middleName : "", lastName).trim();
+    }
+    
     public void setStatus(String status) {
         this.status = status;
     }

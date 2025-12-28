@@ -28,4 +28,9 @@ public class StateService {
 
         return dtoList;
     }
+
+    public State getById(Long id) {
+        return stateRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("State not found with id: " + id));
+    }
 }

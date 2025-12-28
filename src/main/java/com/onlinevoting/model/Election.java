@@ -33,6 +33,10 @@ public class Election extends AuditDetail {
     @Column(name = "result_date")
     private LocalDate resultDate;
 
+    @NotNull(message = "Result date is mandatory")
+    @Column(name = "form_end_date")
+    private LocalDate formEndDate;
+
     @NotNull(message = "Country is mandatory")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", referencedColumnName = "id")

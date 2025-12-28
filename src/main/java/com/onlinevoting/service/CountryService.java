@@ -19,5 +19,10 @@ public class CountryService {
     public List<Country> getAll() {        
         return countryRepository.findAllByIsActiveTrue();
     }
+
+    public Country getById(Long id) {
+        return countryRepository.findByIdAndIsActiveTrue(id)
+            .orElseThrow(() -> new IllegalArgumentException("Country not found with id: " + id));
+    }
     
 }
