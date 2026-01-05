@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -42,6 +43,21 @@ public class EmailService {
         mailSender.send(message);
     }
 
+	  public void sendEmailWithTemplate(List<String> toEmailList, String subject, String templateName, Map<String, Object> model)
+            throws MessagingException, IOException, TemplateException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        Template template = freemarkerConfig.getTemplate(templateName);
+        StringWriter writer = new StringWriter();
+        template.process(model, writer);
+        String toEmails = String.join(",", toEmailList);
+        helper.setTo(toEmails);
+        helper.setSubject(subject);
+        helper.setText(writer.toString(), true);
+
+        mailSender.send(message);
+    }
     
 }
 

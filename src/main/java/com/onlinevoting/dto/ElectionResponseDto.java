@@ -24,6 +24,7 @@ public class ElectionResponseDto {
     private String city;
     private String officer;
     private String status;
+    private Boolean isPublish;
     
     public ElectionResponseDto(Long electionId, String electionName, String status) {
         this.electionId = electionId;
