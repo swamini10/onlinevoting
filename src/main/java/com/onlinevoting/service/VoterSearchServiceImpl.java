@@ -42,7 +42,8 @@ public class VoterSearchServiceImpl implements VoterSearchService {
             userDetail.getPhoneNo()+"",
             userDetail.getDob()+"",
             userDetail.getAadharNumber()+"",
-            userDetail.getStatus()
+            userDetail.getStatus(),
+            userDetail.getDocsUrl()
         );
     }
 

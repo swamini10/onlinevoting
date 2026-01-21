@@ -89,7 +89,7 @@ public class ElectionService {
         // get all active voters in the election's city
         List<UserDetail> activeVoters = userDetailRepository.findActiveVoters(election.getCity().getId());
         // add entry in voting table
-        votingService.createVotingEntries(electionId, activeVoters);
+        votingService.createVotingEntries(electionId, activeVoters , election);
         // get all active voters in the election id
 
         // Send email notification logic can be added here

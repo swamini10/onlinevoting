@@ -19,7 +19,7 @@ INSERT INTO feature(id, name, description, menu_id, menu_name, url, icon, is_act
 
 -- Voter Features
 (12, 'Vote', 'Cast your vote', 3, 'Voter Portal', '/voter/vote', 'fas fa-check-square', 1),
-(13, 'My Profile', 'View and edit profile', 3, 'Voter Portal', '/voter/profile', 'fas fa-user', 1),
+(13, 'My Profile', 'View and edit profile', 3, 'Voter Portal', '/profile/2', 'fas fa-user', 1),
 (14, 'Election Info', 'View election information', 3, 'Voter Portal', '/voter/elections', 'fas fa-info-circle', 1),
 (15, 'Voting History', 'View voting history', 3, 'Voter Portal', '/voter/history', 'fas fa-history', 1),
 (24, 'Party', 'Add Party', 3, 'Voter Portal', 'party', 'fas fa-history', 1),

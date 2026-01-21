@@ -8,9 +8,14 @@ CREATE TABLE `voting` (
   `candidate_id` varchar(255) DEFAULT NULL,
   `election_id` bigint NOT NULL,
   `voter_id` bigint NOT NULL,
+  `client_name` varchar(255) DEFAULT NULL,
+  `lattitude` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
+  `election_end_date_time` datetime(6) DEFAULT NULL,
+  `election_start_date_time` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKcceoe766npyoah90d4qbgqk86` (`election_id`),
   KEY `FK3qtoxb70bimi4ijawbk2h7f84` (`voter_id`),
   CONSTRAINT `FK3qtoxb70bimi4ijawbk2h7f84` FOREIGN KEY (`voter_id`) REFERENCES `user_detail` (`id`),
   CONSTRAINT `FKcceoe766npyoah90d4qbgqk86` FOREIGN KEY (`election_id`) REFERENCES `election` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

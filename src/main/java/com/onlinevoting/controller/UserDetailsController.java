@@ -3,6 +3,11 @@ package com.onlinevoting.controller;
 import com.onlinevoting.model.UserDetail;
 import com.onlinevoting.service.UserDetailService;
 
+import ch.qos.logback.core.subst.Token;
+
+import com.onlinevoting.service.JwtService;
+import com.onlinevoting.service.TokenService;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
@@ -11,6 +16,7 @@ import com.onlinevoting.dto.ApiResponse;
 import com.onlinevoting.dto.BaseDTO;
 import com.onlinevoting.dto.StatusUpdateRequestDTO;
 import com.onlinevoting.dto.UserDetailDTO;
+import com.onlinevoting.dto.UserProfileUpdateDTO;
 
 import java.util.List;
 
@@ -34,6 +40,9 @@ public class UserDetailsController {
 
     @Autowired
     private UserDetailService userDetailService;
+
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping(path = "/v1/user_detail", consumes = { "multipart/form-data" })
     public ResponseEntity<ApiResponse<UserDetail>> createUser(
@@ -93,4 +102,13 @@ public class UserDetailsController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(path = "/v1/user_detail/getProfile", produces = { "application/json"})
+    public ResponseEntity<ApiResponse<UserProfileUpdateDTO>> getUserProfile(HttpServletRequest request) {
+        String emailId = tokenService.extractEmailId(request);
+        UserProfileUpdateDTO userDetail = userDetailService.getUserProfileByEmail(emailId);
+        ApiResponse<UserProfileUpdateDTO> response = new ApiResponse<>(true, userDetail, null);
+        return ResponseEntity.ok(response);
+     
+      }
+       
 }

@@ -49,11 +49,15 @@ public class CandidateService {
             throw new RuntimeException("Failed to parse candidate JSON: " + e.getMessage(), e);
         }
     }
+    
 
     public List<CandidateResponseDTO> getCandidateByElectionId(Long electionId) {
         return candidateRepository.findByElection_Id(electionId).stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
+    }
+    public List<Candidate> getCandidateEntityByElectionId(Long electionId) {
+        return candidateRepository.findByElection_Id(electionId);
     }
 
     public List<CandidateVotingDetail> getCandidateByElectionIdWithDetail(Long electionId) {
@@ -109,7 +113,9 @@ public class CandidateService {
                 candidate.getEmailId(),
                 candidate.getNoteForStatus(),
                 candidate.getDob() != null ? candidate.getDob().toString() : null,
-                candidate.getParty().getLogoUrl()
+                candidate.getParty().getLogoUrl(),
+                candidate.getCandidatePhoto(),
+                candidate.getIncomeProof()
         );
     }
 

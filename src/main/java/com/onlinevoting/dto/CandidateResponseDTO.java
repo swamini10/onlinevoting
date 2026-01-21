@@ -23,6 +23,9 @@ public class CandidateResponseDTO {
     private String noteForStatus;
     private String dob;
     private String logo;
+    private String candidatePhoto;
+    private String incomeProof;
+    
 
     public String getCandidateName() {
         StringBuilder name = new StringBuilder();

@@ -75,4 +75,33 @@ public class Candidate extends AuditDetail {
     @Column(name = "note_for_status", length = 500)
     private String noteForStatus;
 
+    @Column(name = "candidate_photo", length = 512)
+    @NotNull(message = "candidate photo is required")
+    private String candidatePhoto;
+    
+    @Column(name = "income_proof", length = 512)
+    @NotNull(message = "Income proof is required")
+    private String incomeProof;
+
+
+    public String getFullName() {
+        StringBuilder fullName = new StringBuilder();
+        if (firstName != null && !firstName.isEmpty()) {
+            fullName.append(firstName);
+        }
+        if (middleName != null && !middleName.isEmpty()) {
+            if (fullName.length() > 0) {
+                fullName.append(" ");
+            }
+            fullName.append(middleName);
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            if (fullName.length() > 0) {
+                fullName.append(" ");
+            }
+            fullName.append(lastName);
+        }
+        return fullName.toString();
+    }
+    
 }

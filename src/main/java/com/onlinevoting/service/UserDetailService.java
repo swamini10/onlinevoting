@@ -3,9 +3,11 @@ package com.onlinevoting.service;
 import com.onlinevoting.constants.EmailConstants;
 import com.onlinevoting.dto.BaseDTO;
 import com.onlinevoting.dto.UserDetailDTO;
+import com.onlinevoting.dto.UserProfileUpdateDTO;
 import com.onlinevoting.enums.Status;
 import com.onlinevoting.model.UserDetail;
 import com.onlinevoting.repository.UserDetailRepository;
+import com.onlinevoting.util.UserContextHelper;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +31,8 @@ public class UserDetailService {
 
      @Autowired
      private EmailService emailService;
+
+     private UserContextHelper userContextHelper;
 
      public UserDetail saveUser(UserDetail userDetail) {
           var emailId = userDetail.getEmailId();
@@ -131,9 +135,59 @@ public class UserDetailService {
     } catch (Exception e) {
         log.error("Failed to send account activation email", e);
     }
-}
+     }
+
+     public UserProfileUpdateDTO getUserProfile() {
+          UserDetail  detail=  userDetailRepository.findByEmailId(userContextHelper.getCurrentUserEmail());
+          if(detail == null) {
+               throw new IllegalArgumentException("User with account for email " + userContextHelper.getCurrentUserEmail() + " does not exist.");
+          }
+          return mapToUserProfileUpdateDTO(detail);
+     }
+
+     public UserProfileUpdateDTO getUserProfileByEmail(String emailId) {
+          UserDetail  detail=  userDetailRepository.findByEmailId(emailId);
+          if(detail == null) {
+               throw new IllegalArgumentException("User with account for email " + emailId + " does not exist.");
+          }
+          return mapToUserProfileUpdateDTO(detail);
+     }
+
+     private UserProfileUpdateDTO mapToUserProfileUpdateDTO(UserDetail detail) {
+          UserProfileUpdateDTO profile = new UserProfileUpdateDTO();
+          profile.setUserId(detail.getId());
+          profile.setFirstName(detail.getFirstName());
+          profile.setLastName(detail.getLastName());
+          profile.setMiddleName(detail.getMiddleName());
+          profile.setPhoneNo(detail.getPhoneNo());
+          profile.setAddressId(detail.getAddress().getId());
+          profile.setEmailId(detail.getEmailId());
+          profile.setRoleId(detail.getRole().getId());
+          profile.setCountryId(detail.getAddress().getCountryId().getId());
+          profile.setStateId(detail.getAddress().getStateId().getId());
+          profile.setCityId(detail.getAddress().getCityId().getId());
+          profile.setDob(detail.getDob().toString());
+          profile.setAadharNumber(detail.getAadharNumber().toString());
+          profile.setDocsUrl(detail.getDocsUrl());
+          profile.setStatus(detail.getStatus());
+          profile.setStreet(detail.getAddress().getStreet());
+          profile.setZipCode(detail.getAddress().getZipCode());
+          profile.setProfileImageUrl(detail.getDocsUrl());
+          // Set display names
+          profile.setRoleName(detail.getRole().getName());
+          profile.setCountryName(detail.getAddress().getCountryId().getName());
+          profile.setStateName(detail.getAddress().getStateId().getName());
+          profile.setCityName(detail.getAddress().getCityId().getName());
+          
+          return profile;
+     }
+
      public UserDetail getUserByEmail(String email) {
-          return userDetailRepository.findByEmailId(email);
+          UserDetail  detail=  userDetailRepository.findByEmailId(email);
+          if(detail == null) {
+               throw new IllegalArgumentException("User with account for email " + email + " does not exist.");
+          }
+          return detail;
      }
 
      public UserDetail getUserById(Long id) {
@@ -145,15 +199,15 @@ public class UserDetailService {
      }
 
      public UserDetail updateUser(UserDetail userDetail) {
-          var id = userDetail.getId();
+          String emailId = userDetail.getEmailId();
 
-          Optional<UserDetail> existingUserDetail = userDetailRepository.findById(id);
+          UserDetail existingUserDetail = userDetailRepository.findByEmailId(emailId);
           
-          if (existingUserDetail.isEmpty()) {
-               throw new IllegalArgumentException("User with account for ID " + id + " does not exist.");
+          if (existingUserDetail == null) {
+               throw new IllegalArgumentException("User with account for email " + emailId + " does not exist.");
           }
 
-          UserDetail user = existingUserDetail.get();
+          UserDetail user = existingUserDetail;
           user.setFirstName(userDetail.getFirstName());
           user.setLastName(userDetail.getLastName());
           user.setMiddleName(userDetail.getMiddleName());
@@ -162,9 +216,21 @@ public class UserDetailService {
           user.setDob(userDetail.getDob());
           user.setAadharNumber(userDetail.getAadharNumber());
           user.setDocsUrl(userDetail.getDocsUrl());
+          user.setRole(userDetail.getRole());
+          // TO Approve again after profile update
+          user.setActive(false);
+          user.setStatus(Status.PENDING.getDisplayName());
+      
+          UserDetail detail=  userDetailRepository.save(user);
 
-          return userDetailRepository.save(user);
-          
+          // Send update profile email
+          try {
+               emailService.sendEmailWithTemplate(userDetail.getEmailId(), EmailConstants.UPDATE_PROFILE_SUBJECT,
+                         EmailConstants.UPDATE_PROFILE_TEMPLATE, Map.of("name", userDetail.getFirstName()));
+          } catch (Exception e) {
+               e.printStackTrace();
+          }
+          return detail;
      }
 
      public void deleteUser(Long id) {
@@ -216,7 +282,8 @@ public class UserDetailService {
                  (String) obj[4], // phoneNumber
                  dobStr,          // dateOfBirth as String
                  adharStr,        // aadharNumber as String
-                 (String) obj[7]  // status
+                 (String) obj[7]  ,
+                 (String) obj[8]  // profilePhoto
             );
       }
 

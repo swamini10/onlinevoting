@@ -18,4 +18,5 @@ public class UserDetailDTO  {
     private String dateOfBirth;
     private String aadharNumber;
     private String status;
+    private String profilePhoto;
 }
